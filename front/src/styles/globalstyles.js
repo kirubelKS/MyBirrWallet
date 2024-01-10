@@ -24,7 +24,10 @@ export const GlobalStyle = createGlobalStyle`
 
     body{
         font-family: 'Comfortaa', sans-serif;
-        
+        background-color: green;
+        font-size: clamp(1rem, 1.5vw, 1.2rem)
+        overflow: hidden;
+        color: rgba(34, 34, 96, .6);
     }
 
 `;
