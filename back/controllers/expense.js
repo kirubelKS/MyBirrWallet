@@ -1,49 +1,50 @@
-const ExpenseSchema = require("../types/income.js")
+const ExpenseSchema = require("../models/ExpenseModel")
 
 
 exports.addExpense = async (req, res) => {
-   const {title, amount, category, description, date} = req.body
-   const income = ExpenseSchema({
-    title,
-    amount,
-    category,
-    description,
-    date
-   })
+    const {title, amount, category, description, date}  = req.body
 
-   try {
-        //Validate
-        if (!tittle || !category || !description || !date){
-            return res.status(400).json({error: 'all the boxes need to be filled.'})
+    const income = ExpenseSchema({
+        title,
+        amount,
+        category,
+        description,
+        date
+    })
+
+    try {
+        //validations
+        if(!title || !category || !description || !date){
+            return res.status(400).json({message: 'All fields are required!'})
         }
-        if (amount <= 0 || !amount == 'number'){
-            return res.status(400).json({error: 'Amount must be a positive number and greater than 0.'})
+        if(amount <= 0 || !amount === 'number'){
+            return res.status(400).json({message: 'Amount must be a positive number!'})
         }
         await income.save()
-        res.status(200).json({message: 'expense registered' })
-   } catch (error) {
-    res.status(500).json({message: 'loading error' })
-   }
-   console.log(income)
+        res.status(200).json({message: 'Expense Added'})
+    } catch (error) {
+        res.status(500).json({message: 'Server Error'})
+    }
+
+    console.log(income)
 }
 
-
-exports.getExpense = async (req, res) => {
-try {
-    const incomes = await IncomeSchema.find().sort({createdAt: -1})
-    res.status(200).json(incomes)
-} catch (error) {
-    res.status(500).json({message: 'Loading error'})
+exports.getExpense = async (req, res) =>{
+    try {
+        const incomes = await ExpenseSchema.find().sort({createdAt: -1})
+        res.status(200).json(incomes)
+    } catch (error) {
+        res.status(500).json({message: 'Server Error'})
+    }
 }
-}
 
-exports.deleteExpense = async (req, res) => {
+exports.deleteExpense = async (req, res) =>{
     const {id} = req.params;
-    ExpenseSchema.findbyIdAndDelete(id)
-        .then((income) => {
-            res.status(200).json({message: 'Record deleted'})
+    ExpenseSchema.findByIdAndDelete(id)
+        .then((income) =>{
+            res.status(200).json({message: 'Expense Deleted'})
         })
-        .catch((error) =>{
-            res.status(500).json({message:'loading error'})
+        .catch((err) =>{
+            res.status(500).json({message: 'Server Error'})
         })
 }
