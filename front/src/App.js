@@ -3,11 +3,13 @@ import styled from "styled-components";
 import bg from './img/bg.png'
 import {MainLayout} from './styles/Layouts'
 import Orb from './Components/Orb/Orb'
-import Navigation from './Components/Navigation/Navigation'
+import Navigation from './Components/Navigation/Navigation';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Income from './Components/Income/Income'
 import Expenses from './Components/Expenses/Expenses';
+import Login from './Components/Login/Login'
 import { useGlobalContext } from './context/globalContext';
+import History from './History/History';
 
 function App() {
   const [active, setActive] = useState(1)
@@ -20,11 +22,13 @@ function App() {
       case 1:
         return <Dashboard />
       case 2:
-        return <Dashboard />
+        return <History />
       case 3:
         return <Income />
       case 4: 
         return <Expenses />
+      case 5: 
+        return <Login />
       default: 
         return <Dashboard />
     }
