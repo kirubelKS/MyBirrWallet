@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { useGlobalContext } from '../../../context/globalContext';
+import { useGlobalContext } from '../../context/globalContext';
 import History from '../../History/History';
-import { InnerLayout } from '../../../styles/Layouts';
+import { InnerLayout } from '../../styles/Layouts';
 import { dollar } from '../../utils/Icons';
-import Chart from '../Chart/Chart';
+import Chart from '../Chart/chart';
 
 function Dashboard() {
     const {totalExpenses,incomes, expenses, totalIncome, totalBalance, getIncomes, getExpenses } = useGlobalContext()
@@ -25,19 +25,19 @@ function Dashboard() {
                             <div className="income">
                                 <h2>Total Income</h2>
                                 <p>
-                                    {dollar} {totalIncome()}
+                                    Br {totalIncome()}
                                 </p>
                             </div>
                             <div className="expense">
                                 <h2>Total Expense</h2>
                                 <p>
-                                    {dollar} {totalExpenses()}
+                                    Br {totalExpenses()}
                                 </p>
                             </div>
                             <div className="balance">
                                 <h2>Total Balance</h2>
                                 <p>
-                                    {dollar} {totalBalance()}
+                                    Br {totalBalance()}
                                 </p>
                             </div>
                         </div>
@@ -47,19 +47,19 @@ function Dashboard() {
                         <h2 className="salary-title">Min <span>Salary</span>Max</h2>
                         <div className="salary-item">
                             <p>
-                                ${Math.min(...incomes.map(item => item.amount))}
+                                Br {incomes.length > 0 ? Math.min(...incomes.map(item => item.amount)) : 0}
                             </p>
                             <p>
-                                ${Math.max(...incomes.map(item => item.amount))}
+                                Br {incomes.length > 0 ? Math.max(...incomes.map(item => item.amount)) : 0}
                             </p>
                         </div>
                         <h2 className="salary-title">Min <span>Expense</span>Max</h2>
                         <div className="salary-item">
                             <p>
-                                ${Math.min(...expenses.map(item => item.amount))}
+                                Br {expenses.length > 0 ? Math.min(...expenses.map(item => item.amount)) : 0}
                             </p>
                             <p>
-                                ${Math.max(...expenses.map(item => item.amount))}
+                                Br {expenses.length > 0 ? Math.max(...expenses.map(item => item.amount)) : 0}
                             </p>
                         </div>
                     </div>

@@ -1,14 +1,18 @@
 import React, { useContext, useState } from "react"
+// import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 
-const BASE_URL = "http://localhost:5000/api/v1/";
+// const BASE_URL = "http://localhost:5000/api/v1/";
+const BASE_URL = "http://localhost:33333/api/v1/";
 
 
 const GlobalContext = React.createContext()
 
 export const GlobalProvider = ({children}) => {
+    // const navigate = useNavigate();
 
+    const [loggedInUser, setLogin] = useState(null)
     const [incomes, setIncomes] = useState([])
     const [expenses, setExpenses] = useState([])
     const [error, setError] = useState(null)
@@ -32,14 +36,22 @@ export const GlobalProvider = ({children}) => {
         const res  = await axios.delete(`${BASE_URL}delete-income/${id}`)
         getIncomes()
     }
-
+    
     const totalIncome = () => {
         let totalIncome = 0;
         incomes.forEach((income) =>{
             totalIncome = totalIncome + income.amount
         })
-
+        
         return totalIncome;
+    }
+
+    const loginUser = async (data) => {
+        const res  = await axios.post(`${BASE_URL}login`, data)
+        console.log(res);
+        // navigate('/dashboard');
+        setLogin(res.data);
+        return res.data
     }
 
 
@@ -101,6 +113,8 @@ export const GlobalProvider = ({children}) => {
             totalExpenses,
             totalBalance,
             transactionHistory,
+            loginUser,
+            loggedInUser,
             error,
             setError
         }}>

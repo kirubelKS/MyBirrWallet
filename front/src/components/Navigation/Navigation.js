@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import avatar from '../../img/avatar.png'
 import { signout } from '../../utils/Icons'
-import { menuItems } from '../../utils/menuItems'
+import { menuItems } from '../../utils/menuitems'
+import { useGlobalContext } from '../../context/globalContext';
 
 function Navigation({active, setActive}) {
+    const {loggedInUser} = useGlobalContext()
     
     return (
         <NavStyled>
@@ -17,6 +19,9 @@ function Navigation({active, setActive}) {
             </div>
             <ul className="menu-items">
                 {menuItems.map((item) => {
+                    if (item.id === 5 && loggedInUser) {
+                        return null
+                    }
                     return <li
                         key={item.id}
                         onClick={() => setActive(item.id)}
@@ -28,9 +33,11 @@ function Navigation({active, setActive}) {
                 })}
             </ul>
             <div className="bottom-nav">
-                <li>
-                    {signout} Sign Out
-                </li>
+                {loggedInUser && (
+                    <li>
+                        {signout} Sign Out
+                    </li>
+                ) }
             </div>
         </NavStyled>
     )
