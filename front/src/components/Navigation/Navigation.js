@@ -6,7 +6,7 @@ import { menuItems } from '../../utils/menuitems'
 import { useGlobalContext } from '../../context/globalContext';
 
 function Navigation({active, setActive}) {
-    const {loggedInUser} = useGlobalContext()
+    const {userInfo} = useGlobalContext()
     
     return (
         <NavStyled>
@@ -19,7 +19,7 @@ function Navigation({active, setActive}) {
             </div>
             <ul className="menu-items">
                 {menuItems.map((item) => {
-                    if (item.id === 5 && loggedInUser) {
+                    if (item.id === 5 && userInfo()) {
                         return null
                     }
                     return <li
@@ -33,7 +33,7 @@ function Navigation({active, setActive}) {
                 })}
             </ul>
             <div className="bottom-nav">
-                {loggedInUser && (
+                {userInfo() && (
                     <li>
                         {signout} Sign Out
                     </li>

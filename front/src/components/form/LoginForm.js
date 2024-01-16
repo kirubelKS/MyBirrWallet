@@ -21,9 +21,10 @@ function LoginForm() {
         setError('')
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        loginUser(inputState)
+        await loginUser(inputState);
+        
         setInputState({
             email: '',
             password: '',
