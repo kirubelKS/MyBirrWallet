@@ -17,6 +17,13 @@ export const GlobalProvider = ({children}) => {
     const [expenses, setExpenses] = useState([])
     const [error, setError] = useState(null)
 
+    const userInfo = () => {
+        if (localStorage?.getItem('user')) {
+            return JSON.parse(localStorage?.getItem('user'))
+        }
+        return null;
+    }
+
     //calculate incomes
     const addIncome = async (income) => {
         const response = await axios.post(`${BASE_URL}add-income`, income)
@@ -50,6 +57,7 @@ export const GlobalProvider = ({children}) => {
         const res  = await axios.post(`${BASE_URL}login`, data)
         console.log(res);
         // navigate('/dashboard');
+        localStorage.setItem('user', JSON.stringify(res.data.data))
         setLogin(res.data);
         return res.data
     }
@@ -115,6 +123,7 @@ export const GlobalProvider = ({children}) => {
             transactionHistory,
             loginUser,
             loggedInUser,
+            userInfo,
             error,
             setError
         }}>

@@ -12,10 +12,10 @@ import { useGlobalContext } from './context/globalContext';
 import History from './History/History';
 
 function App() {
-  const [active, setActive] = useState(1)
+  const [active, setActive] = useState(5)
 
   const global = useGlobalContext()
-  console.log(global);
+  console.log(global, "global context");
 
   const displayData = () => {
     switch(active){
@@ -30,7 +30,7 @@ function App() {
       case 5: 
         return <Login />
       default: 
-        return <Dashboard />
+        return <Login />
     }
   }
 
@@ -42,7 +42,9 @@ function App() {
     <AppStyled bg={bg} className="App">
       {orbMemo}
       <MainLayout>
-        <Navigation active={active} setActive={setActive} />
+        {global?.userInfo() && (
+          <Navigation active={active} setActive={setActive} />
+          )}
         <main>
           {displayData()}
         </main>
@@ -55,7 +57,7 @@ const AppStyled = styled.div`
   height: 100vh;
   background-image: url(${props => props.bg});
   position: relative;
-  main{
+  main{    
     flex: 1;
     background: rgba(252, 246, 249, 0.78);
     border: 3px solid #FFFFFF;
